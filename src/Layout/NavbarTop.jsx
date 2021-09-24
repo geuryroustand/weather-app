@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { VscSearch } from "react-icons/vsc";
 // import logo from "../../public/logo512.png";
 // import logo from "../../src/logo.png";
+import debounce from "lodash.debounce";
 
 import {
   Container,
@@ -11,48 +12,64 @@ import {
   Form,
   FormControl,
   Row,
+  ListGroup,
 } from "react-bootstrap";
 import "./Navbar.css";
 import { connect } from "react-redux";
 import { getCite } from "../actions";
+import SearchList from "../Components/SearchList";
 
-const mapStateToProps = (state) => state;
+const mapStateToProps = (state) => ({
+  country: state.countries,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   fetchCity: (searchCity) => dispatch(getCite(searchCity)),
 });
 
-const NavbarTop = ({ fetchCity }) => {
+const NavbarTop = ({ fetchCity, country }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
-  console.log(searchTerm);
+  // const changeHandler = (e) => {
+  //   fetchCity(e.target.value);
+  // };
 
-  useEffect(() => {
-    fetchCity();
+  const debouncedChangeHandler = debounce((e) => {
+    console.log(e.nativeEvent.inputType);
+    if (e.target.value.length >= 3) {
+      fetchCity(e.target.value);
+      setSearchTerm(e.target.value);
+    }
+  }, 500);
+  // debounce((e) => fetchCity(e.target.value), 300),
+  // []
 
-    // const getInfo = async () => {
-    //   try {
-    //     let response = await fetch(
-    //     );
+  // useEffect(() => {
+  // if (searchTerm.length > 3) {
+  // fetchCity();
+  // }
+  // const getInfo = async () => {
+  //   try {
+  //     let response = await fetch(
+  //     );
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       console.log(data);
+  //       // dispatch({
+  //       //   type: "FETCH_CITY",
+  //       //   payload: data,
+  //       // });
+  //     } else {
+  //       console.log("not fetch");
+  //     }
+  //   } catch (error) {
+  //     // console.log(error);
+  //   }
+  // };
+  // getInfo();
+  // }, []);
 
-    //     if (response.ok) {
-    //       const data = await response.json();
-
-    //       console.log(data);
-    //       // dispatch({
-    //       //   type: "FETCH_CITY",
-    //       //   payload: data,
-    //       // });
-    //     } else {
-    //       console.log("not fetch");
-    //     }
-    //   } catch (error) {
-    //     // console.log(error);
-    //   }
-    // };
-
-    // getInfo();
-  }, []);
+  // const hendLerSubmit = () => {};
 
   return (
     <header className="nav-bg">
@@ -76,19 +93,25 @@ const NavbarTop = ({ fetchCity }) => {
               style={{ width: "150px", marginLeft: "10px" }}
             />
           </Navbar.Brand>
+          {/* onSubmit={hendLerSubmit} */}
           <Form className="form-search-top ">
             <div className="form-search-input">
               <FormControl
-                onChange={(e) => {
-                  // setSearchTerm(e.target.value);
-                  fetchCity(e.target.value);
-                }}
-                defaultValue={searchTerm}
+                onChange={debouncedChangeHandler}
+                // setSearchTerm(e.target.value);
+                // fetchCity(e.target.value);
+
+                // defaultValue={searchTerm}
                 type="search"
                 placeholder="Search City or Zip Code"
                 className=" search-form"
                 aria-label="Search "
               />
+              {/* searchTerm */}
+              {country.name ? <SearchList /> : null}
+              {/* {searchTerm ? <SearchList /> : ""} */}
+              {/* {console.log(country.name ? "yes" : "not")} */}
+
               {/* <VscSearch className="icon-search" /> */}
             </div>
             {/* <Button variant="outline-success">Search</Button> */}

@@ -7,7 +7,7 @@ export const getCite = (city) => {
 
       if (response.ok) {
         const data = await response.json();
-
+        // console.log(data);
         dispatch({
           type: "FETCH_CITY",
           payload: data,

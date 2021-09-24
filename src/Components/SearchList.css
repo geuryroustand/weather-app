@@ -1,0 +1,16 @@
+.search-list {
+  z-index: 10 !important;
+  width: 25.3rem;
+  /* position: fixed; */
+  top: 3rem;
+  left: 0;
+  position: absolute;
+  /* margin-left: 25rem; */
+  /* border-radius: 50px !important; */
+}
+
+.search-li:hover {
+  color: white;
+  cursor: pointer;
+  background-color: #375c89;
+}

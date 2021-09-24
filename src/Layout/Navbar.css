@@ -17,7 +17,7 @@
 
 .form-search-input {
   /* position: absolute; */
-  /* position: relative; */
+  position: relative;
 }
 .icon-search {
   position: absolute;
