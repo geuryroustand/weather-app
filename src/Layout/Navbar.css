@@ -1,0 +1,33 @@
+.nav-bg {
+  background-color: #05336b;
+}
+
+.search-form {
+  width: 25rem;
+  border-radius: 10px;
+  background-color: #375c89;
+  border: none;
+  /* width: 100%; */
+  padding: 10px;
+  text-align: center;
+}
+::placeholder {
+  color: white !important;
+}
+
+.form-search-input {
+  /* position: absolute; */
+  /* position: relative; */
+}
+.icon-search {
+  position: absolute;
+  margin-left: 22rem;
+
+  /* padding: 10px; */
+  /* min-width: 40px;  */
+}
+
+.input-icons {
+  width: 100%;
+  margin-bottom: 10px;
+}
